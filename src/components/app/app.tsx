@@ -24,7 +24,7 @@ export function App({ projects }: AppProps) {
           <p className={styles.description}>Discovery open-source projects.</p>
           <p className={styles.guide}>Simply click on the ball.</p>
           <div>
-            <a href="https://github.com/gitscovery/gitscovery">[Source Code]</a>
+            <a href="https://github.com/awwwsm/gitscovery">[Source Code]</a>
           </div>
         </Container>
       </div>
