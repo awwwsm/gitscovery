@@ -33,6 +33,18 @@ function Button({ projects }: AppProps) {
     setPosition({ x: middleX, y: middleY });
   };
 
+  const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
+    const touch = e.touches[0];
+
+    if (!ref.current || !touch) return;
+
+    const { clientX, clientY } = touch;
+    const { height, left, top, width } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX, y: middleY });
+  };
+
   const reset = () => {
     setPosition({ x: 0, y: 0 });
   };
@@ -56,6 +68,8 @@ function Button({ projects }: AppProps) {
       onClick={handleClick}
       onMouseLeave={reset}
       onMouseMove={handleMouse}
+      onTouchEnd={reset}
+      onTouchMove={handleTouch}
     >
       <motion.div
         animate={{ x: x * 0.3, y: y * 0.3 }}
