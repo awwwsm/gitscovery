@@ -1,90 +1,90 @@
-import { useRef, useEffect, useState } from 'react';
-import Fuse from 'fuse.js';
+import { useRef, useState } from 'react';
+import { motion } from 'motion/react';
 
-import type { Project, Projects } from '@/data/projects';
-import { Projects as ProjectsComponent } from '../projects';
+import type { Projects } from '@/data/projects';
 
 import styles from './app.module.css';
-import { cn } from '@/helpers/styles';
+import { pick } from '@/helpers/random';
 
 interface AppProps {
   projects: Projects;
 }
 
 export function App({ projects }: AppProps) {
-  const fuse: React.MutableRefObject<null | Fuse<Project>> = useRef(null);
+  return (
+    <div className={styles.app}>
+      <div className={styles.pattern} />
+      <Button projects={projects} />
+    </div>
+  );
+}
 
-  useEffect(() => {
-    fuse.current = new Fuse(projects, {
-      includeScore: true,
-      keys: ['title', 'tags', 'description'],
-      threshold: 0.4,
-    });
-  }, [projects]);
+function Button({ projects }: AppProps) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const form = useRef<HTMLFormElement | null>(null);
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<Projects>(projects);
+  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!ref.current) return;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (query.trim() !== '' && fuse.current) {
-      const fuseResults = fuse.current.search(query);
-
-      setResults(fuseResults.map(r => r.item));
-    } else {
-      setResults(projects);
-    }
+    const { clientX, clientY } = e;
+    const { height, left, top, width } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX, y: middleY });
   };
 
-  const setExample = (query: string) => {
-    if (fuse.current) {
-      setQuery(query);
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
 
-      const fuseResults = fuse.current.search(query);
+  const { x, y } = position;
 
-      setResults(fuseResults.map(r => r.item));
-    }
+  const handleClick = () => {
+    const randomProject = pick(projects);
+
+    window.location.href = randomProject.repo;
   };
 
   return (
-    <div className={styles.wrapper}>
-      <form className={styles.form} ref={form} onSubmit={handleSubmit}>
-        <input
-          placeholder="Search for a project..."
-          type="text"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-        />
-        <button type="submit">
-          Search
-          <div className={styles.corner} />
-          <div className={styles.corner} />
-          <div className={styles.corner} />
-          <div className={styles.corner} />
-        </button>
-      </form>
+    <motion.button
+      animate={{ x, y }}
+      className={styles.button}
+      ref={ref}
+      style={{ position: 'relative' }}
+      transition={{ damping: 15, mass: 0.1, stiffness: 150, type: 'spring' }}
+      whileTap={{ scale: 0.95 }}
+      onClick={handleClick}
+      onMouseLeave={reset}
+      onMouseMove={handleMouse}
+    >
+      <motion.div
+        animate={{ x: x * 0.3, y: y * 0.3 }}
+        className={styles.one}
+        transition={{ damping: 15, mass: 0.1, stiffness: 150, type: 'spring' }}
+      />
 
-      <div className={styles.separator} />
-      <div className={styles.examples}>
-        <h3>Examples:</h3>
-        <div className={styles.buttons}>
-          {['AI', 'Productivity', 'Security', 'Community'].map(example => (
-            <button key={example} onClick={() => setExample(example)}>
-              {example}
-              <div className={styles.corner} />
-              <div className={styles.corner} />
-              <div className={styles.corner} />
-              <div className={styles.corner} />
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className={cn(styles.separator, styles.bottom)} />
+      <motion.div
+        animate={{ x: x * 0.2, y: y * 0.2 }}
+        className={styles.two}
+        transition={{
+          damping: 15,
+          mass: 0.1,
+          stiffness: 150,
+          type: 'spring',
+        }}
+      />
 
-      <ProjectsComponent projects={results} />
-      <div className={cn(styles.separator)} />
-    </div>
+      <motion.span
+        animate={{ x: x * 0.3, y: y * 0.3 }}
+        transition={{
+          damping: 15,
+          mass: 0.1,
+          stiffness: 150,
+          type: 'spring',
+        }}
+      >
+        [New Project]
+      </motion.span>
+    </motion.button>
   );
 }
