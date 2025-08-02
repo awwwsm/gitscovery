@@ -23,9 +23,46 @@
     background-size: 40px 40px;
     opacity: 0.6;
   }
+
+  & .details {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: var(--font-2xsm);
+    text-align: center;
+    text-transform: uppercase;
+
+    & h1 {
+      margin-bottom: 8px;
+      font-size: var(--font-xsm);
+      font-weight: 500;
+    }
+
+    & p {
+      margin-bottom: 4px;
+      color: var(--color-foreground-subtle);
+
+      &.guide {
+        color: var(--color-foreground-subtler);
+      }
+    }
+
+    & div {
+      margin-top: 8px;
+
+      & a {
+        font-weight: 500;
+        color: var(--color-foreground);
+        text-decoration: none;
+      }
+    }
+  }
 }
 
 .button {
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,11 +72,11 @@
   cursor: pointer;
   background: var(--color-neutral-100);
   border: none;
-  -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   box-shadow:
     inset 0 -12px 24px var(--color-neutral-50),
     0 12px 24px rgb(9 9 11 / 50%);
+  -webkit-tap-highlight-color: transparent;
 
   & .one {
     position: absolute;
