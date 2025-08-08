@@ -6,6 +6,7 @@ import type { Projects } from '@/data/projects';
 import styles from './app.module.css';
 import { pick } from '@/helpers/random';
 import { Container } from '../container';
+import { cn } from '@/helpers/styles';
 
 interface AppProps {
   projects: Projects;
@@ -16,12 +17,23 @@ export function App({ projects }: AppProps) {
     <div className={styles.app}>
       <div className={styles.pattern} />
 
-      <Button projects={projects} />
+      <div className={styles.wrapper}>
+        <Button projects={projects} />
+        <div className={cn(styles.lines, styles.one)} />
+        <div className={cn(styles.lines, styles.two)} />
+        <div className={cn(styles.circle, styles.one)} />
+        <div className={cn(styles.circle, styles.two)} />
+        <div className={cn(styles.dot, styles.one)} />
+        <div className={cn(styles.dot, styles.two)} />
+        <div className={cn(styles.dot, styles.three)} />
+        <div className={cn(styles.dot, styles.four)} />
+        <div className={styles.outer} />
+      </div>
 
       <div className={styles.details}>
         <Container>
           <h1>Gitscovery</h1>
-          <p className={styles.description}>Discovery open-source projects.</p>
+          <p className={styles.description}>Discover open-source projects.</p>
           <p className={styles.guide}>Simply click on the ball.</p>
           <div>
             <a href="https://github.com/awwwsm/gitscovery">[Source Code]</a>
