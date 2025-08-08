@@ -1,5 +1,3 @@
-import { reverseArray } from '@/helpers/array';
-
 export interface Project {
   date: string;
   repo: string;
@@ -9,7 +7,7 @@ export interface Project {
 
 export type Projects = Array<Project>;
 
-const _projects: Projects = [
+export const projects: Projects = [
   {
     date: '2025-08-08',
     repo: 'https://github.com/HeyPuter/puter',
@@ -29,5 +27,3 @@ const _projects: Projects = [
     title: 'Mermaid',
   },
 ];
-
-export const projects = reverseArray(_projects);
