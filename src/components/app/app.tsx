@@ -101,6 +101,8 @@ function Button({ projects }: AppProps) {
       onTouchEnd={reset}
       onTouchMove={handleTouch}
     >
+      <div className={styles.noise} />
+
       <motion.div
         animate={{ x: x * 0.3, y: y * 0.3 }}
         className={styles.one}
