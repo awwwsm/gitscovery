@@ -19,7 +19,7 @@
         var(--color-neutral-100) 1px,
         var(--color-neutral-50) 1px
       );
-    background-position: right;
+    background-position: center;
     background-size: 40px 40px;
     opacity: 0.6;
   }
