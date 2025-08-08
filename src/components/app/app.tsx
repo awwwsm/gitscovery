@@ -15,6 +15,11 @@ interface AppProps {
 export function App({ projects }: AppProps) {
   return (
     <div className={styles.app}>
+      <div className={styles.latest}>
+        <h2>Latest:</h2>
+        <a href={projects.at(-1)?.repo}>[{projects.at(-1)?.repoLabel}]</a>
+      </div>
+
       <div className={styles.pattern} />
 
       <div className={styles.wrapper}>

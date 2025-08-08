@@ -61,6 +61,30 @@
     }
   }
 
+  .latest {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    z-index: 5;
+    font-family: var(--font-mono);
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+
+    & h2 {
+      font-size: var(--font-2xsm);
+      color: var(--color-foreground-subtle);
+    }
+
+    & a {
+      margin-top: 8px;
+      font-size: var(--font-2xsm);
+      font-weight: 500;
+      color: var(--color-foreground);
+      text-decoration: none;
+    }
+  }
+
   & .wrapper {
     position: relative;
     display: flex;
